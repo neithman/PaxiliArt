@@ -113,16 +113,22 @@ class ExampleTest extends TestCase
         Storage::fake('public');
         $seller = User::factory()->create(['role' => 'seller']);
 
+        $this->actingAs($seller)->get(route('seller.artworks.create'))
+            ->assertOk()
+            ->assertSee('Fantasy')
+            ->assertSee('Sci-Fi');
+
         $this->actingAs($seller)->post(route('seller.artworks.store'), [
             'title' => 'New little world',
             'description' => 'An original test illustration.',
-            'category' => 'Sci-Fi',
+            'category' => 'Fantasy',
             'price' => 125,
             'cover_image' => UploadedFile::fake()->image('cover.png'),
         ])->assertRedirect(route('seller.dashboard'));
 
         $artwork = Artwork::firstOrFail();
         $this->assertSame('pending', $artwork->status);
+        $this->assertSame('Fantasy', $artwork->category);
         Storage::disk('public')->assertExists($artwork->cover_image);
     }
 

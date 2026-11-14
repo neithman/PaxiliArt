@@ -13,7 +13,7 @@
             <div class="product-form-grid">
                 <div class="field span-two"><label for="title">Artwork title *</label><input id="title" name="title" maxlength="120" value="{{ old('title', $artwork->title) }}" required placeholder="Give your artwork a name"></div>
                 <div class="field"><label for="category">Category *</label><select id="category" name="category" required>
-                    @foreach (['Digital illustration', 'Photography', '3D art', 'Abstract', 'Character design'] as $category)
+                    @foreach (['Sci-Fi', 'Anime', 'Fantasy', 'Monsters', 'Others'] as $category)
                         <option value="{{ $category }}" @selected(old('category', $artwork->category) === $category)>{{ $category }}</option>
                     @endforeach
                 </select></div>
